@@ -1,0 +1,88 @@
+.pad-5{
+	padding:5px;
+}
+
+.inter{padding:5px;}
+.inter label{margin-left:5px;}
+.inter input{float:right;}
+.inter input[type=checkbox]{float:none;}
+
+.fl{float:left;}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+.textright{text-align:right;}
+.error{
+	color:red;
+}
+
+.message{
+	color:green;
+}
+
+.main-message-box{
+	position:absolute;
+	top:20;
+	left:20;
+	background-color:white;
+}
+
+.file-navigator{
+	
+}
+
+.h4{font-size:16px;}
+.inline{display:inline}
+
+.file-container{
+
+}
+
+.cmd-list{
+	font-size:9px!;
+}
+
+.fixed{
+    position: fixed;
+    width: 25%;
+}
+
+.dropzone{
+	height:200px;
+	overflow:hidden;
+	background-color:grey;
+	border:2px dashed #101010;
+	
+}
+
+.dropzone-hover{
+	background-color:#f1f1f2
+}
+
+.bg-even{
+	background-color:#f0f0f0;
+}
+
+.bg-odd{
+	background-color:#c0c0c0;
+}
+
+.last-not,
+.shar-not{
+	text-transform:capitalize;
+}
+
+.last-not{
+	background-color:#f0f0f0;
+}
+
+.shar-not{
+	background-color:#f0f0ff;
+}
+
+.fav{
+	height:14px;
+	width:14px;
+}

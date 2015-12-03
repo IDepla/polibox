@@ -1,0 +1,15 @@
+<form method="post" class="col-md-6 col-centered"> 
+  <div class="inter" ng-repeat="(key,obj) in content">
+	
+  	<button type="button" 
+			class="btn btn-primary"
+			ng-model="obj.option" 
+			btn-checkbox 
+			btn-checkbox-true="true" 
+			btn-checkbox-false="false">
+        {{obj.option}}
+    </button>
+  	<label>{{obj.description}}</label>
+  </div>
+  
+</form>

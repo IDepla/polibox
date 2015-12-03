@@ -1,0 +1,14 @@
+{
+"title":"Accedi",
+"email":"email",
+"password":"password",
+"rememe":"Ricordami",
+"passforg":"password dimenticata?",
+"button":"Accedi",
+"tooltip":
+	{
+		"email":"inserisci l'email di registrazione",
+		"password":"inserisci la tua password",
+		"rememe":"accederai in automatico le prossime volte"
+	}
+}

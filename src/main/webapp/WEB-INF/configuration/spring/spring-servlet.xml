@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+ ">
+
+	<mvc:annotation-driven />
+
+	<!-- risorse statiche -->
+	<mvc:resources mapping="/rs/**" location="/rs/" />
+
+	<context:component-scan
+		base-package="
+ 				it.polito.ai.polibox.web.controllers
+  				" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/rest/**" />
+			<bean name="customSecurityAuthenticationInterceptor"
+				class="it.polito.ai.polibox.web.controllers.authentication.CustomSecurityAuthenticationInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+
+	<mvc:view-controller path="/" view-name="index" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<!-- <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" 
+			/> -->
+		<property name="prefix" value="/WEB-INF/views/html/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>

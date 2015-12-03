@@ -1,0 +1,21 @@
+<form method="post" class="col-md-6 col-centered">
+  <div class="inter">
+  	<label>{{content.email}}</label>
+  	<input type="email" ng-model="form.email" ng-value="form.email"  required/>
+  </div>
+  <div class="inter">
+  	<label>{{content.oldpassword}}</label>
+  	<input type="password" ng-model="form.password" required minlength="4"/>
+  </div>
+  <div class="inter">
+  	<label>{{content.newpassword}}</label>
+  	<input type="password" ng-model="form.newPassword" required minlength="4"/>
+  </div>
+  <div class="inter">
+  	<label>{{content.newrepassword}}</label>
+  	<input type="password" ng-model="form.newRepassword" required minlength="4"/>
+  </div>
+  <div class="inter">
+  	<label>{{content.usedspace}} -->  {{form.size|bytes}}</label>
+  </div>
+</form>

@@ -1,0 +1,11 @@
+{
+"title":"Attiva il tuo account",
+"email":"email",
+"code":"codice",
+"button":"attiva subito",
+"tooltip":
+	{
+		"email":"inserisci l'email di registrazione",
+		"code":"inserisci il codice che ti abbiamo spedito per email",
+	}
+}

@@ -1,0 +1,36 @@
+<div class="row col-xs-12" ng-controller="HomeNotificationController">
+ <div class="col-xs-6 last-not well" ng-controller="LastNotificationController">
+		<div class="col-xs-12">
+			<span class="h4 col-xs-6">{{cnt.title}}</span>
+           <span class="input-group col-xs-4">
+             <em class="form-control" datepicker-popup="{{format}}" ng-change="change()"
+              ng-model="from.value"  is-open="from.opened"  max-date="maxDate" show-button-bar="false"
+               >{{from.value | date:format}}</em>
+             <span class="input-group-btn">
+               <button type="button" class="btn btn-default" ng-click="open($event,from)"><i class="glyphicon glyphicon-calendar"></i></button>
+             </span>
+           </span>
+       </div>
+     
+ 	<div class="col-xs-12" ng-if="notificationList.length==0">{{cnt.none}}</div>
+ 	<div class="col-xs-12" ng-if="notificationList.length>0">
+ 		<div class="pad-5" ng-repeat="obj in notificationList"  ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+ 		  <h7 class="text-right">{{obj.time | date:"HH:mm:ss"}}</h7>
+ 		  <h6 class="text-justify">{{obj.message}}</h6>
+ 		</div>
+ 	</div>
+ </div>
+ <div class="col-xs-6 shar-not well" ng-controller="SharingNotificationController">
+ 	<h3 class="text-center">{{cnt.title}}</h3>
+ 	<div class="col-xs-12" ng-if="shareList.length==0"> {{cnt.none}}</div>
+	<div class="pad-5" ng-repeat="(index,obj) in shareList"  ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+	  <h7 class="text-right">
+	  	{{obj.fromRequestTime | date:"dd-mm-yyyy HH:mm:ss"}}
+	  	<i>{{obj.ownerName | date:"dd-mm-yyyy HH:mm:ss"}}</i>
+	  	{{obj.description}}
+	  	<em>{{obj.resourceName}}</em>
+	  	<button class="btn btn-default" ng-click="accept(index)">{{cnt.accept}}</button>
+	  </h7>
+	</div> 	
+ </div>
+</div>

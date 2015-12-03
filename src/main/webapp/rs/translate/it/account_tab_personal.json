@@ -1,0 +1,10 @@
+{
+"content":{
+		"name":"nome",
+		"surname":"cognome",
+		"company":"azienza",
+		"position":"posizione aziendale",
+		"mobile":"telefono cellulare"
+	},
+"saveSubmit":"salva"
+}

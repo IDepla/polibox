@@ -1,0 +1,7 @@
+{
+	"title":"nuovo dispositivo",
+	"ok":"salva",
+	"cancel":"indietro",
+	"label":"nome device",
+	"explain":"Scrivi il nome del tuo device, dopo potrai scaricare il software per sincronizzare una cartella del tuo pc. Ricorda per ogni computer che vuoi sincronizzare dovrai creare un diverso device"
+}

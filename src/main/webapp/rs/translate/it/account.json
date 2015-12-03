@@ -1,0 +1,15 @@
+{
+"title":"your account",
+"tabs":[
+		{
+			"title":"account"
+		},
+		{
+			"title":"personal informations"
+		},
+		{
+			"title":"email notification settings"
+		}
+	],
+"saveSubmit":"salva"
+}

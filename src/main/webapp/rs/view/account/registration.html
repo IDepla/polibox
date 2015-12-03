@@ -1,0 +1,36 @@
+<form method="post" class="col-md-6 col-centered" ng-submit="ok()">
+ <div class="modal-header">
+   <h3 class="modal-title">{{cnt.title}}</h3>
+ </div>
+ <div class="modal-body">
+  <div class="inter">
+  	<label for="name">{{cnt.name}}</label>
+  	<input name="name" type="text" ng-model="form.name" required/>
+  </div>
+  <div class="inter">
+  	<label for="surname">{{cnt.surname}}</label>
+  	<input name="surname" type="text" ng-model="form.surname" required/>
+  </div>
+  <div class="inter">
+  	<label for="email">{{cnt.email}}</label>
+  	<input name="email" type="email" ng-model="form.email" data-toggle="tooltip" data-placement="right" title="{{cnt.tooltip.email}}" required/>
+  </div>
+  <div class="inter">
+  	<label for="password">{{cnt.password}}</label>
+  	<input name="password" type="password" ng-model="form.password" data-toggle="tooltip" data-placement="right" title="{{cnt.tooltip.password}}" required minlength="4"/>
+  </div>
+  <div class="inter">
+  	<label for="repassword">{{cnt.repass}}</label>
+  	<input name="repassword" type="password" ng-model="form.repassword" required minlength="4"/>
+  </div>
+  	
+  <div class="inter">
+  	<input type="checkbox" name="term" ng-model="form.term" data-toggle="tooltip" data-placement="right" title="{{cnt.tooltip.terms}}" required /> 
+  	<label for="term">{{cnt.accept}} <a href="#terms">{{cnt.terms}}</a></label>
+  </div>
+  <message-box class="inter text-center"></message-box>
+ </div>
+ <div class="modal-footer">
+  <input type="submit" class="btn btn-primary" value="{{cnt.ok}}" />
+ </div>
+</form>

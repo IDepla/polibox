@@ -1,0 +1,8 @@
+<div>
+<h2>{{cnt.title}} 	<button type="button" class="btn btn-primary" ng-click="save()">{{cnt.saveSubmit}}</button></h2>
+<tabset>
+	<tab ng-repeat="tab in cnt.tabs" heading="{{tab.title}}"  active="tab.active">
+		<div ng-include="tab.template" ng-controller="tab.controller" ng-init="init()"></div>
+	</tab>
+</tabset>
+</div>

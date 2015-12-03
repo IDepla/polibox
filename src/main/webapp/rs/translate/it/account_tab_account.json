@@ -1,0 +1,10 @@
+{
+"content":{
+			"email":"email",
+			"oldpassword":"vecchia password",
+			"newpassword":"nuova password",
+			"newrepassword":"ripeti nuova password",
+			"usedspace":"spazio usato"
+		},
+"saveSubmit":"salva"
+}

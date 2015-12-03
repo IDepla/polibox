@@ -1,0 +1,40 @@
+{
+	"title":"I tuoi file sempre con te",
+	
+	"lnk":{
+			"regis":"registrazione",
+			"login":"accedi",
+			"term":"termini e condizioni",
+			"contact":"contattami",
+			"info":"ulteriori informazioni"
+	},
+	"section":[{
+			"class" : "",
+			"figure" : { 
+							"alt":"",
+							"src":"",
+							"class":"",
+							"intclass":""
+						},
+			"content":
+		},{
+			"class" : "col-sm-4",
+			"figure" : { 
+							"alt":"polibox security",
+							"src":"rs/img/security.jpg",
+							"class":"img-responsive center-block",
+							"intclass":""
+						},
+			"content":
+		},{
+			"class" : "col-sm-4",
+			"figure" : { 
+							"alt":"",
+							"src":"",
+							"class":"",
+							"intclass":""
+						},
+			"content":
+		}
+	]
+}

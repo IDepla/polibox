@@ -1,0 +1,86 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	">
+
+
+	<!-- <debug /> -->
+
+
+	<context:component-scan base-package="it.polito.ai.polibox.security.authentication" />
+	<context:component-scan base-package="it.polito.ai.polibox.web.handlers" />
+
+	<http pattern="/rs/**" security="none" />
+
+	<http pattern="/rest/**" create-session="stateless">
+		<intercept-url pattern="/**" requires-channel="https" />
+		<http-basic />
+	</http>
+
+
+	<http authentication-manager-ref="authenticationManagerByUser">
+		<intercept-url pattern="/authenticate/ping" access="ROLE_EXISTENCE" />
+		<intercept-url pattern="/authenticate/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/account/registrazione" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="ROLE_EXISTENCE"
+			requires-channel="https" />
+
+
+		<form-login login-page="/authenticate/login"
+			login-processing-url="/authenticate/process" username-parameter="email"
+			password-parameter="password" authentication-success-handler-ref="ajaxAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="ajaxAuthenticationFailureHandler" />
+		<logout logout-url="/authenticate/logout" success-handler-ref="ajaxLogoutSuccessHandler"
+			delete-cookies="JSESSIONID" />
+		<!-- enable csrf protection -->
+		<csrf request-matcher-ref="regexRequestMatcher" />
+		<session-management invalid-session-url="/index"
+			session-fixation-protection="migrateSession"
+			session-authentication-error-url="/index" />
+		<headers>
+			<xss-protection />
+			<frame-options />
+			<cache-control />
+		</headers>
+		<access-denied-handler error-page="/authenticate/access/denied" />
+
+		<port-mappings>
+			<port-mapping http="8080" https="8443" />
+		</port-mappings>
+	</http>
+
+	<beans:bean id="regexRequestMatcher"
+		class="org.springframework.security.web.util.matcher.RegexRequestMatcher">
+		<beans:constructor-arg name="pattern"
+			value="\(.*(index|realtime)\)*"></beans:constructor-arg>
+		<beans:constructor-arg name="httpMethod">
+			<beans:null></beans:null>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<!-- questo viene usato per caricare gli users -->
+	<beans:bean id="userDetailsService"
+		class="it.polito.ai.polibox.security.authentication.MyUserDetailsService">
+		<beans:property name="userDao" ref="userDao" />
+	</beans:bean>
+
+	<beans:bean id="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg>
+			<beans:value>10</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManagerByUser">
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="bcryptEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

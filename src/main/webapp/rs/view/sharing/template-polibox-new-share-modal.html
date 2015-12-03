@@ -1,0 +1,39 @@
+<div class="modal-header">
+   	<h3 class="modal-title">
+   	{{cnt.title}} 
+   	<img ng-if="file.directory" alt="{{cnt.directory}}" src="rs/img/folder.png" class="fav"/>
+   	<img ng-if="!file.directory" alt="{{cnt.file}}" src="rs/img/text.png" class="fav"/>
+   	 {{file.name}}
+   	</h3>
+</div>
+<div class="modal-body">
+	<div ng-if="sharing.length==0">{{cnt.none}}</div>
+	<div ng-repeat="(index,obj) in sharing" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+		<span ng-if="!obj.requestAccepted" class="glyphicon glyphicon-hourglass"></span>
+		<span ng-if="obj.requestAccepted" class="glyphicon glyphicon-ok"></span>
+		<i>{{obj.targetName}}</i> 
+		<em ng-if="!obj.requestAccepted">{{cnt.from}} <i>{{obj.fromRequestTime | date:"dd-mm-yyyy HH:mm:ss"}}</i></em> 
+		<span ng-if="obj.requestAccepted">{{cnt.toAccTime}} {{obj.toAcceptedTime | date:"dd-mm-yyyy HH:mm:ss"}}</span>
+		<em>{{cnt.granted}} {{obj.ownerName}}</em>
+		<span ng-if="file.owned">
+			<select ng-model="obj.permission" ng-options="mode.id as mode.description for mode in modes" ng-change="obj.dirty=!obj.dirty">
+		    </select>
+		</span>
+		<span ng-if="!file.owned">
+			{{obj.description}}
+		</span>
+		<span ng-if="file.owned" class="glyphicon glyphicon-remove" ng-click="remove(index)"></span>
+	</div>
+	<hr/>
+	<div ng-repeat="(index,obj) in unsaved" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+		{{cnt.email}} <input type="email" ng-model="obj.email" required="required"/> {{cnt.right}} 
+	    <select ng-model="obj.mode" ng-options="mode.id as mode.description for mode in modes">
+	    </select>
+	    <span class="glyphicon glyphicon-remove" ng-click="removeUnsaved(index)"></span>
+	</div>
+</div>
+<div class="modal-footer">
+	  <button ng-if="file.owned" class="btn " ng-click="nuova()">{{cnt.newc}}</button>
+ 	  <button ng-if="file.owned" class="btn btn-primary" ng-click="salva()">{{cnt.ok}}</button>
+ 	  <button class="btn btn-warning" ng-click="indietro()">{{cnt.back}}</button>
+</div>

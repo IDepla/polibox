@@ -1,0 +1,6 @@
+<div ng-show="messages.length>0">
+	<ng-transclude></ng-transclude>
+	<div ng-repeat="obj in messages" ng-class="obj.class">
+		{{obj.message}}
+	</div>
+</div>

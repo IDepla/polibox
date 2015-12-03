@@ -1,0 +1,17 @@
+{
+"title":"Registrazione",
+"name":"nome",
+"surname":"cognome",
+"email":"email",
+"password":"password",
+"repass":"re-password",
+"accept":"accetta",
+"terms":"termini e condizioni",
+"ok":"registrati",
+"tooltip":
+	{
+		"email":"inserisci l'email di registrazione",
+		"password":"inserisci la tua password",
+		"terms":"se non li accetti non ti puoi registrare"
+	}
+}

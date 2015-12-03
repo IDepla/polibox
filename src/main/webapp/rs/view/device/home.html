@@ -1,0 +1,61 @@
+<div class="container-fluid">
+<div class="row">
+	<div class="btn btn-default col-xs-1 pull-right" ng-click="add()" tooltip="{{cnt.add}}" tooltip-placement="top">
+	  <span class="glyphicon glyphicon-plus-sign"></span>
+	</div>
+</div>
+<accordion class="row" close-others="oneAtATime">
+	<accordion-group heading="{{obj.name}}" ng-repeat="(ind,obj) in deviceList()" class="row col-xs-12" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+		<polibox-device index="ind" value="obj"></polibox-device>
+	</accordion-group>
+</accordion>
+</div>
+
+<script type="text/ng-template" id="template-polibox-device.html">
+		<div ng-if="value.deletable" class="col-xs-4 pull-left" ng-dblclick="toggleRenaming()" tooltip="{{cnt.renamedbl}}" tooltip-placement="top" tooltip-popup-delay="900">
+			<div ng-show="isRenaming">{{cnt.rename}}<input type="text" ng-model="value.name"/></div>
+			<span ng-hide="isRenaming">{{cnt.nome}}: {{value.name}}</span>
+		</div>
+		<div ng-if="!value.deletable" class="col-xs-4 pull-left">
+			<span>{{cnt.nome}}: {{value.name}}</span>
+		</div>		
+
+		<div ng-if="value.deletable" class="btn btn-default pull-right" ng-click="remove()" tooltip="{{cnt.delete}}" tooltip-placement="top" tooltip-popup-delay="900">
+			<span class="glyphicon glyphicon-remove"></span>
+		</div>
+		<div ng-if="value.deletable" class="btn btn-default pull-right" ng-click="download()" tooltip="{{cnt.download}}" tooltip-placement="top" tooltip-popup-delay="900">
+			<span class="glyphicon glyphicon-download"></span>
+		</div>
+		<div class="col-xs-12">
+<h3>{{cnt.options}}</h3>
+<form method="post" class="col-centered"> 
+  <div class="col-xs-4" ng-repeat="(key,obj) in content">
+  	<button type="button" 
+			class="btn btn-primary"
+			ng-model="obj.option" 
+			btn-checkbox 
+			btn-checkbox-true="true" 
+			btn-checkbox-false="false"
+			ng-change="save(key)">
+        {{obj.option}}
+    </button>
+  	<label>{{obj.description}}</label>
+  </div>
+  
+</form>
+		</div>
+
+</script>
+<script type="text/ng-template" id="template-polibox-add-device.html">
+			<div class="modal-header">
+            	<h3 class="modal-title">{{cnt.title}}</h3>
+        	</div>
+			<div class="modal-body">{{cnt.explain}}</div>
+        	<div class="modal-body">
+		        	<div>{{cnt.label}} <input type="text" ng-model="name"/></div>
+        	</div>
+        	<div class="modal-footer">
+          	  <button class="btn btn-primary" ng-click="ok()">{{cnt.ok}}</button>
+          	  <button class="btn btn-warning" ng-click="cancel()">{{cnt.cancel}}</button>
+        	</div>
+</script>

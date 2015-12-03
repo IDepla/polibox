@@ -1,0 +1,142 @@
+<div ng-controller="HomeFileController" class="container-fluid">
+ <div ng-controller="FileContainerController" class="file-container row col-xs-12">
+	 <div ng-controller="FileMenuController" class="btn-group file-navigator col-xs-2" ng-click="clearSelection();">
+	 	<a class="btn btn-default btn-block" ng-click="myFiles()" ng-model="sel" btn-radio="1">{{cnt.myFile}}</a>
+	 	<a class="btn btn-default btn-block" ng-click="sharedWithMe()" ng-model="sel" btn-radio="2">{{cnt.sharedWithMe}}</a>
+	 	<a class="btn btn-default btn-block" ng-click="sharedByMe()" ng-model="sel" btn-radio="3">{{cnt.sharedByMe}}</a>
+	 	<a class="btn btn-default btn-block" ng-click="trash()" ng-model="sel"  btn-radio="4">{{cnt.trash}}</a>
+	 </div>
+ <!-- 	<span  ng-cont roller="FilePat hController"  class="col-xs-10">/{{path()}}</span> -->
+ 	<polibox-path class="col-xs-10"></polibox-path>
+ 	<div  class="col-xs-9">
+		<polibox-directory ng-repeat="obj in directoryList" 
+							path="{{obj.path}}" id="{{obj.id}}" 
+							ng-model="obj.checked"
+							btn-checkbox
+							class="btn btn-default"
+							></polibox-directory>
+	 	<polibox-file ng-repeat="obj in fileList" 
+	 					path="{{obj.path}}" id="{{obj.id}}" 
+	 					ng-model="obj.checked"
+	 					btn-checkbox
+	 					class="btn btn-default"
+	 					></polibox-file>
+ 	</div>
+ 	<div ng-controller="FileCommandListController" class="row col-xs-1  cmd-list">
+ 	 <span class="btn-group ">
+		 <a ng-if="command.directory" class="btn btn-default btn-sm btn-block" ng-click="newDirectory()" data-toggle="tooltip" data-placement="right" title="{{cnt.newDir}}">
+			<span class="glyphicon glyphicon-folder-open"></span></a>
+		 <a ng-if="command.upload" class="btn btn-default btn-sm btn-block" ng-click="upload()" data-toggle="tooltip" data-placement="right" title="{{cnt.upload}}">
+		 	<span class="glyphicon glyphicon-upload"></span></a>
+	 </span>
+	 <span ng-if="isSelect()" class="animate-if btn-group ">
+		 <a ng-if="command.trash" class="btn btn-default btn-sm btn-block" ng-click="trash()"  data-toggle="tooltip" data-placement="right" title="{{cnt.delete}}" >
+		 	 <span class="glyphicon glyphicon-trash"></span></a>
+		 <a ng-if="command.share && hasOne()" class="btn btn-default btn-sm btn-block" ng-click="share()" data-toggle="tooltip" data-placement="right" title="{{cnt.share}}">
+			 <span class="glyphicon glyphicon-share"></span></a>
+		 <a ng-if="command.download" class="btn btn-default btn-sm btn-block" ng-click="download()" data-toggle="tooltip" data-placement="right" title="{{cnt.download}}">
+			 <span class="glyphicon glyphicon-download"></span></a>
+		 <a  ng-if="command.property && hasOne()" class="btn btn-default btn-sm btn-block" ng-click="properties()" data-toggle="tooltip" data-placement="right" title="{{cnt.properties}}">
+			 <span class="glyphicon glyphicon-list-alt"></span></a>
+		 <a ng-if="command.ripristina" class="btn btn-default btn-sm btn-block" ng-click="ripristina()" data-toggle="tooltip" data-placement="right" title="{{cnt.ripristina}}">
+			 <span class="glyphicon glyphicon-transfer"></span></a>
+		 <a ng-if="command.move && (command.your || hasOne())" class="btn btn-default btn-sm btn-block" ng-click="move()" data-toggle="tooltip" data-placement="right" title="{{cnt.move}}"><span class="glyphicon glyphicon-move"></span></a>
+	 </span>
+ 	</div>
+ 	<polibox-uploader-list class="col-xs-12"></polibox-uploader-list>
+ 	<script type="text/ng-template" id="template-polibox-drop-zone.html">
+		
+			<div class="modal-header">
+            	<h3 class="modal-title">{{cnt.title}}</h3>
+        	</div>
+			<div class="modal-body"><input type="file" polibox-file-input  multiple /></div>
+        	<div class="modal-body dropzone" polibox-drop-zone>
+		        	    {{cnt.content}}
+        	</div>
+			<polibox-uploader-list class="modal-body"></polibox-uploader-list>
+        	<div class="modal-footer">
+          	  <button class="btn btn-primary" ng-click="ok()">{{cnt.ok}}</button>
+          	  <button class="btn btn-warning" ng-click="cancel()">{{cnt.cancel}}</button>
+        	</div>
+		
+	</script>
+	<script type="text/ng-template" id="template-polibox-new-directory-modal.html">
+		
+			<div class="modal-header">
+            	<h3 class="modal-title">{{cnt.title}}</h3>
+        	</div>
+        	<div class="modal-body">
+					<div>{{cnt.position}}: {{position}}</div>
+		        	<div>{{cnt.label}} <input type="text" ng-model="newname"/></div>
+        	</div>
+        	<div class="modal-footer">
+          	  <button class="btn btn-primary" ng-click="ok()">{{cnt.ok}}</button>
+          	  <button class="btn btn-warning" ng-click="cancel()">{{cnt.cancel}}</button>
+        	</div>
+		
+	</script>
+	<script type="text/ng-template" id="template-polibox-file-properties-modal.html">
+			<div class="modal-header">
+            	<h3 class="modal-title">{{cnt.title}}</h3>
+        	</div>
+        	<div class="modal-body">
+					<div>{{cnt.position}}: {{name}} <button ng-click="rinomina()" class="btn btn-default">{{cnt.rinomina}}</button></div> 
+		        	<div>{{cnt.size}} {{size|bytes}} <a ng-click="download(version)">{{cnt.download}}</a></div>
+					<div ng-if="owner.length>0">
+						<div>{{cnt.owner}}</div>
+						<div ng-repeat="(index,obj) in owner" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+							{{obj.name}} {{cnt.from}} {{obj.from | date:'yyyy-MM-dd HH:mm:ss'}} 
+						</div>
+					</div>
+					<div ng-if="shared.length>0">
+						<div>{{cnt.sharedwith}}</div>
+						<div ng-repeat="(index,obj) in shared" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+		<span ng-if="!obj.requestAccepted" class="glyphicon glyphicon-hourglass"></span>
+		<span ng-if="obj.requestAccepted" class="glyphicon glyphicon-ok"></span>
+		<i>{{obj.targetName}}</i> 
+		<em ng-if="!obj.requestAccepted">{{cnt.from}} <i>{{obj.fromRequestTime | date:"dd-mm-yyyy HH:mm:ss"}}</i></em> 
+		<span ng-if="obj.requestAccepted">{{cnt.toAccTime}} {{obj.toAcceptedTime | date:"dd-mm-yyyy HH:mm:ss"}}</span>
+		 {{obj.description}}
+						</div>
+					</div>
+					<div ng-if="history.length>0">
+						<div>{{cnt.history}}</div>
+						<div ng-repeat="(index,obj) in history" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+<a class="btn btn-default btn-sm" ng-click="download(obj.version)" data-toggle="tooltip" data-placement="right" title="{{cnt.download}}">
+			 <span class="glyphicon glyphicon-download"></span></a>
+							{{cnt.uploader}}: {{obj.uploader}} ({{obj.size|bytes}}) {{cnt.del}} {{obj.from | date:'yyyy-MM-dd HH:mm:ss'}} <a class="btn btn-default btn-sm" ng-click="promote(obj.version)" tooltip="{{cnt.promuovi}}" tooltip-placement="right"><span class="glyphicon glyphicon-arrow-up"></span></a> 
+						</div>
+					</div>  
+        	</div>
+        	<div class="modal-footer">
+          	  <button class="btn btn-primary" ng-click="ok()">{{cnt.ok}}</button>
+        	</div>
+		
+	</script>
+	
+<script type="text/ng-template" id="template-polibox-resource-move-modal.html">
+<div class="modal-header">
+	<h3 class="modal-title">{{cnt.title}}</h3>
+</div>
+<div class="modal-body">
+<div><div><b>{{cnt.spostare}}</b></div>
+<div ng-repeat="(index,obj) in resourceList">{{obj.path}}</div>
+</div>
+<div>
+<div><b>{{cnt.path}}</b></div>
+	<span ng-repeat="(index,obj) in path">/<a class="btn btn-link" ng-click="openPath(index,obj.id,obj.path)">{{getName(obj.path)}}</a></span>
+</div>
+<div><b>{{cnt.target}}</b></div>
+	<div  class="col-xs-9">
+		<div ng-repeat="(index,obj) in directoryList" ng-model="radio.selected" btn-radio="radiobuttons[index]" uncheckable class="btn btn-default">
+			<div ng-dblclick="open(obj.id,obj.path)"><img src="rs/img/folder.png" /></div><div>{{getName(obj.path)}}</div>
+		</div>
+ 	</div>
+</div>
+<div class="modal-footer">
+   <button class="btn btn-primary" ng-click="cancel()">{{cnt.cancel}}</button>
+   <button class="btn btn-primary" ng-click="ok()">{{cnt.ok}}</button>
+ </div>
+</script>
+ </div>
+</div>

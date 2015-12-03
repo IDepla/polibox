@@ -1,0 +1,17 @@
+<li ng-if="isRTActive()" dropdown is-open="status.isOpen">
+	<a class="btn btn-link text-warning dropdown-toggle" dropdown-toggle>{{list.length}}</a>
+	<ul class="dropdown-menu" role="menu">
+      <li class="text-center">{{cnt.last}}</li>
+      <li class="divider"></li>
+	  <li ng-repeat="obj in list" ng-class-even="'bg-even'" ng-class-odd="'bg-odd'">
+		<h6 class="text-muted">{{obj.creationTime | date:"HH:mm:ss"}} <small class="text-primary">{{obj.description}}</small></h6>
+	  </li>
+	  <li ng-if="!isRTActive() || list.length==0">{{cnt.none}}</li>
+  	</ul>
+</li>
+<li ng-if="isRTClosed()">
+	<a class="btn btn-link"><span class="glyphicon glyphicon-alert"></span>{{cnt.closed}}</a>
+</li>
+<li ng-if="isRTConnecting()">
+	<a class="btn btn-link"><span class="glyphicon glyphicon-hourglass"></span>{{cnt.connecting}}</a>
+</li>
